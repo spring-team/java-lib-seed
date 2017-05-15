@@ -67,7 +67,7 @@ function main() {
             err "failed to create git tag: $git_tag"
             return 1
         fi
-        if ! git push --tags > /dev/null
+        if ! git push --tags; then
             err "failed to push git tags"
             return 1
         fi
