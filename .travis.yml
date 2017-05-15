@@ -1,13 +1,16 @@
-sudo: required
 language: java
+sudo: true
+install: true
+script: bash travis-build.bash
 jdk:
 - oraclejdk8
-install: true
-script: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_REGISTRY && bash
-  travis-build.bash
+addons:
+  apt:
+    packages:
+    - oracle-java8-installer
 branches:
   except:
-  - /^\d+\.\d+\.\d+/
+  - "/\\+travis\\d+$/"
 env:
   global:
   - CI_DEPLOY_USERNAME=travis-mvn-deploy
@@ -20,8 +23,6 @@ notifications:
     on_start: always
     urls:
     - https://webhook.atomist.com/travis
-services:
-- docker
 cache:
   directories:
   - $HOME/.m2
