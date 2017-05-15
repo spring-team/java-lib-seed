@@ -24,11 +24,6 @@
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-ext</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
@@ -68,4 +63,21 @@
             </plugin>
         </plugins>
     </reporting>
+    <repositories>
+        <repository>
+            <id>public-atomist-release</id>
+            <name>Atomist Release</name>
+            <url>https://atomist.jfrog.io/atomist/libs-release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <distributionManagement>
+        <repository>
+            <id>public-atomist-release</id>
+            <name>Atomist Release</name>
+            <url>https://atomist.jfrog.io/atomist/libs-release-local</url>
+        </repository>
+    </distributionManagement>
 </project>

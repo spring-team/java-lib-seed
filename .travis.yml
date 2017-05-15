@@ -1,0 +1,27 @@
+sudo: required
+language: java
+jdk:
+- oraclejdk8
+install: true
+script: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD $DOCKER_REGISTRY && bash
+  travis-build.bash
+branches:
+  except:
+  - /^\d+\.\d+\.\d+/
+env:
+  global:
+  - CI_DEPLOY_USERNAME=travis-mvn-deploy
+  - secure: fmTu9NzOnmTAaRoYqp0JoWNDCd0KEJTiyYYcgVXQoqQ5kj+PoWFi1zEDekL21wObNWQTrHJrqbctLDjdGiF51MjS0boEubkhKXXg/ZexI/yXJXRzPivc9Ix6DXa+k39uTJZIH4aHrccRPzsW15JGZf9gMGnZnkNGcL4v2xIBDDwypDPd1pz8AW7mktixSwzvCBIN3PCrWBjuBJfYd6xQZnOHCUV0SrEBBCCVib7ptr8BgCObb2Ee8zsQ/aeoblU46xUtyIG95AYogQV57SZ6Cp5DaM7WOXmOBebpCcbHnVSYjz/AYzNikE/Tx2yi2xK/0XArX+qwvHTcWkNFY/u732qkW6EmqorEbg8ns/QFMuYV7mT5QyM4DsPeO2kJCX+bvo/IV8T6RA2cr9dAqVwkA2zsI+ZIA7yQhMKRmlFCODDhg7HVPgScBrNs7JqhilDcPj0xkcgrB0C1/xtWk0plSqiiQ136/2NIVLgtwouWg0BL2to9IrWkrWSOXkRyAJyevle55TTAuRIyDQ2DxYFBGCONVr/8Znj9jwbfni5K3qsq1y7cVzT441zkFba98geWRE594OaT577xAPgAxcgr105kUp4y4OGkDLY9ddESqpROsNxW9/HMQBiZoKD/ftTFgo1xZzlG+GdgXElFv1I3FR9v3UAt8sPJZGC7ABeFD6c=
+notifications:
+  email: false
+  webhooks:
+    on_success: always
+    on_failure: always
+    on_start: always
+    urls:
+    - https://webhook.atomist.com/travis
+services:
+- docker
+cache:
+  directories:
+  - $HOME/.m2
