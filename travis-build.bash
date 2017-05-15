@@ -17,7 +17,7 @@ function err() {
 function main() {
     msg "branch is ${TRAVIS_BRANCH}"
 
-    local mvn="mvn --settings .settings.xml -B -V -DskipTests"
+    local mvn="mvn --settings .settings.xml -B -V -U"
     local project_version
     if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
         if ! $mvn build-helper:parse-version versions:set -DnewVersion="$TRAVIS_TAG" versions:commit; then
@@ -38,8 +38,8 @@ function main() {
         fi
     fi
 
-    if ! $mvn install -Dmaven.javadoc.skip=true; then
-        err "maven install failed"
+    if ! $mvn test $mvn_deploy_args; then
+        err "maven test failed"
         return 1
     fi
 
@@ -50,10 +50,11 @@ function main() {
 
     if [[ $TRAVIS_BRANCH == master || $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
         msg "version is $project_version"
-        if ! $mvn deploy -DskipTests; then
-            err "maven deploy failed"
-            return 1
+        local mvn_deploy_args
+        if [[ $TRAVIS_BRANCH == master ]]; then
+            mvn_deploy_args=-DaltDeploymentRepository=public-atomist-dev::default::https://atomist.jfrog.io/atomist/libs-dev-local
         fi
+
         if ! git config --global user.email "travis-ci@atomist.com"; then
             err "failed to set git user email"
             return 1
@@ -67,7 +68,7 @@ function main() {
             err "failed to create git tag: $git_tag"
             return 1
         fi
-        if ! git push --tags; then
+        if ! git push --quiet --tags "https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG" > /dev/null 2>&1; then
             err "failed to push git tags"
             return 1
         fi
