@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.atomist.springteam</groupId>
     <artifactId>java-lib-seed</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
     <name>java-lib-seed</name>
     <description>Seed for creating Java libraries</description>
