@@ -1,0 +1,29 @@
+dist: trusty
+sudo: required
+language: java
+jdk:
+- oraclejdk8
+branches:
+  except:
+  - "/\\+travis\\d+$/"
+env:
+  global:
+  - secure: kBDr+F4nvENPli3U000KbxHtYJcaZEscssxrzsu7dJevJADOBagSPib8SsM6NZez9IdSbDLwqv8/xqbZlFXQsEix+8C/Dga+TfqtaWh2DWX3frTGpQp85CjllFtqwezLEvttl5itTFonp80v0+K+5ZUiAmyx4xXrBM5o8pEOD796ms6a8Dl7O1PDI3XQ3yJyjzMvdLqiHhu+hsEsReFmNS9VZrhjRg2A5Wd8mAaUDVRFwrHB0URmuZkDxQM2L5cEd1/5yInurHumsU21Uaa8e8BLSo3j/3VHgQ8ZVdQ8al0loju95eUp+cMDv3uhDvbV7dz8C/FO+jMnybn00PHxosO6MWfaa1aDmg1zNOXUqNqu2GOgvW964TxobtoWO5CAMcsi/7q4dBgOyg1mGp4pt8svTpkZJufRxOZVzgQ/u8TKkNpN2N0Jk3oyZhNBZ+02j26pQH1UkeAs2F3IsxeHZMOn833njxNzGKYHhvskiSu0Z91CgD5gWYalRurlvvikPneLXKx1yfBjMM9XZmxG2Tjf3b+J7UaJj0lBD/ExHiyJxz2TESMATFYJNNaCUPuYsAexFInBy2xoxUiIkeuTvdL9pKnwZG/2zrxLJ+1s7xKImNEaqaGVo5xqm2MVCOzLOpC+yFzcZvhiPo9eyecq/bJ3vPpqLTu5W++i4zrp+WM=
+  - secure: OUrxzPFhEKKiJGMu2S1119Q0WPrMjyfiXnpXgwGrR6mYeJd/lgIYs8GW5El7RnBa1iiTEZkvKTgceyK/m9B9cnZthJTXGHboTeyg0YNJb37l6BPxD7Ec1BxtdD5X0jHuD80arDgW/wtnCuKmRDWXG1WhU84L/zht54KoLKbyVwXW5GJQOHoz8yeEoK4mJyEVItX6Y6oV7c4TDqDLkHOFjLg3K7PkjT+wtDOI1yTwWoQX9HegT/tAyEcxHVax+mOxRayhmIyU0c34RzaVANhHIKVB6rGiorsVexKn+syIIxesB228X/RMDnA4v/FgZ9w4YoKzqcZ19zNQiCN7T6vWJGMlbGrejRYaD/HZakkB6JULh0xwbyxJWNuylawanBgzCoU9JosclGxtx8PXLKY7sa0HVyDK3dUH7JmT3pqYgFkSwZH0zPvKInqYxxgXYz5qBIu85BnIfULDsUq2ExxwresGWlHnspq1gglle7j99wnuUNhG8RiIPRyuklOvFNLFWjnd8hmBzSLCPd2ozkKTO18d5F2thQ5lnVa31RrnlUkQ6O+hTUQPgeddoautdGX0HdUD6o+k4HgJQbDIdOSo+NiUmFa0wdU9wj5ih2xh+VZ4amQs8rr3jA+isvFHg2tEI5xuBEwdD9wm9cNES2SlyGnItE+rltj0e7uzTKUGhfU=
+  - secure: TltN9hF3ELvbOoZRR5FRHPKmsKz5Cj0UtpcjRMxB1Z1FipiiYylO3X1w2mZ4SnBL9Lum8UP6EREywgk9ebo+NcsU5gOKyDwv0m/2cwianS1zq/UJXIkHThh3u7zqkVwMm/BDLjBUHfbS8s3vfWXr2Vc75yhTollDA8JmT3PQMQbWbiZHrqyCrKjQeSMnGv8ndhCOYwQ27fran9MFkbJFds+pYxP0pms20BAZsCttXpamCPrjpzqLihylbxsrqpSuTzwrOfp3tzevcvgaJwYpmJG2LZY89WDd1LO+Lqlu6ybHjF+l75NX0Ad6YXmYQji85Z5YrEATL2aLwFHAqy7nOM9OJBI7ERVF26AndaxR+J6VhTn6EqaTCp5plHF3Kldg02gBSkTRTIotlx/MYc0l+nPGKCa+0/aNEq4crRiG6vyypEV2aIJTBxLHIOH31jLQ9QTcVDb2oKgJBsPc51wQx6ZNen7SumWojWB/mUgVU5aaOQPzRuQwJ34F/RhiIyakqpyrcfU90/Tz6vPnaoKoZHHArcXnMxtN8Z1q0h+Oz3OgWs/KzmzJ20LjggjK9uU7ZHXkHtWTgqO5lBjpeaYDnHU4X2IozEXoqNws5wtmegL5szHjekPdLzDXX9NfTo7FO2aZk0bKdjFv3iJWJZ8ABbAamhwBV9RbQisJRJx6wyE=
+  - MAVEN_BASE_URL=https://atomist.jfrog.io/atomist
+install: true
+script: bash src/main/scripts/travis-build.bash
+notifications:
+  email: false
+  webhooks:
+    urls:
+    - https://webhook.atomist.com/travis
+    on_success: always
+    on_failure: always
+    on_start: always
+    on_cancel: always
+    on_error: always
+cache:
+  directories:
+  - "$HOME/.atomist"
